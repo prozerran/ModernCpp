@@ -1,0 +1,40 @@
+# Ignore CI build directory
+build/
+xcuserdata
+cmake-build-debug/
+.idea/
+# python
+*.pyc
+
+# Visual Studio files
+*.sdf
+*.opensdf
+*.VC.opendb
+*.suo
+*.user
+_ReSharper.Caches/
+Win32-Debug/
+Win32-Release/
+x64-Debug/
+x64-Release/
+Debug/
+Release/
+
+# Ignore autoconf / automake files
+Makefile.in
+aclocal.m4
+configure
+build-aux/
+autom4te.cache/
+
+# Ignore generated directories.
+.vs/
+
+# macOS files
+.DS_Store
+
+# Ignore cmake generated directories and files.
+CMakeFiles
+CTestTestfile.cmake
+Makefile
+cmake_install.cmake
