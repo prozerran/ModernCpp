@@ -171,7 +171,8 @@ namespace MODERNCPP
 
 		// smart pointers
 		// https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
-		std::auto_ptr<Base> ap;									// C++98, deprecated
+
+		//std::auto_ptr<Base> ap;								// C++98, deprecated in C++17
 		std::shared_ptr<Base> sp = std::make_shared<Base>();	// C++11, released until all shared pointer out of scope
 		std::weak_ptr<Base> wp = sp;							// C++11, shared pointer, resolve cyclic reference
 		std::unique_ptr<Base> up;								// C++11, replacement for auto pointer, 1 reference
