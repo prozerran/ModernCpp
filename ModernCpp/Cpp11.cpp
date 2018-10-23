@@ -63,9 +63,10 @@ namespace MODERNCPP
 	void Cpp11::DoWorkInternal()
 	{
 		std::cout << "DoWorkInternal";
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 
-	std::thread Cpp11::CallDoWorkInternal(int n)
+	std::thread Cpp11::DoWorkAsync(int n)
 	{
 		return std::thread([=] { DoWorkInternal(); });
 	}
@@ -386,6 +387,20 @@ namespace MODERNCPP
 		producer.join();
 		consumer.join();
 		cout << "Net: " << c << endl;
+	}
+
+	void Cpp11::DetachedThread()
+	{
+		unsigned int n = std::thread::hardware_concurrency();
+
+		std::cout << "Starting thread caller.\n";
+		std::cout << n << " concurrent threads are supported.\n";
+
+		std::thread t([this] { this->DoWorkInternal(); });
+		t.detach();
+
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		std::cout << "Exiting thread caller.\n";
 	}
 
 	void Cpp11::VariableSizes()

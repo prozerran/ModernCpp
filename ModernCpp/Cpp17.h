@@ -6,7 +6,7 @@
 #include "Cpp11.h"
 
 // C++17 __has_include
-#ifdef __has_include                           // Check if __has_include is present
+#ifdef __has_include						   // Check if __has_include is present
 #  if __has_include(<optional>)                // Check for a standard library
 #    include <optional>
 #  elif __has_include(<experimental/optional>) // Check for an experimental version
@@ -53,6 +53,9 @@ namespace MODERNCPP::CPP17		// C++17, nested namespace
 				return t;  // deduces return type to int for T = int
 		}
 
+		// [[ using attribute-namespace : attribute-list ]]
+		[[nodiscard]] int StandardAttributes(bool);		// caller should read return value
+
 		DEPRECATED("Method has been deprecated")
 		void DeprecatedMethod() {};
 
@@ -74,7 +77,9 @@ namespace MODERNCPP::CPP17		// C++17, nested namespace
 		void FoldExpression();
 		void RemovedTrigraphs();				// unable to output special characters
 		void Utf8Literals();
+		void HexFloatingPointLiterals();
 		void TemplateDeductionConstructor();
+		void SpecialMathFunctions();
 
 	private:
 

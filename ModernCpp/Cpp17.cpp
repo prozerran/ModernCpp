@@ -11,6 +11,7 @@
 #include <variant>
 #include <exception>
 #include <stdexcept>
+#include <cmath>
 
 //#define NDEBUG		// disable assert() for release
 
@@ -130,11 +131,11 @@ namespace MODERNCPP::CPP17
 		v = 12; // v contains int
 		int i = std::get<int>(v);
 		w = std::get<int>(v);
-		w = std::get<0>(v); // same effect as the previous line
-		w = v; // same effect as the previous line
+		w = std::get<0>(v);		// same effect as the previous line
+		w = v;					// same effect as the previous line
 
-	//  std::get<double>(v); // error: no double in [int, float]
-	//  std::get<3>(v);      // error: valid index values are 0 and 1
+	//  std::get<double>(v);	// error: no double in [int, float]
+	//  std::get<3>(v);			// error: valid index values are 0 and 1
 
 		try {
 			std::get<float>(w); // w contains int, not float: will throw
@@ -272,10 +273,109 @@ namespace MODERNCPP::CPP17
 		std::cout << h << endl;
 	}
 
+	void Cpp17::HexFloatingPointLiterals()
+	{
+		double d = 0x1.2p3; // hex fraction 1.2 (decimal 1.125) scaled by 2^3, that is 9.0
+
+		std::cout << 58. << '\n'
+			<< 4e2 << '\n'
+			<< 123.456e-67 << '\n'
+			<< .1E4f << '\n'
+			<< d << '\n'
+			<< 0x10.1p0 << '\n';
+	}
+
 	void Cpp17::TemplateDeductionConstructor()
 	{
 		// similar to call TemplateArgumentDeduction
 		auto [a, b] = std::pair(5.0, false);		// instead of std::pair<double, bool>(5.0, false)
 		std::cout << a << " " << b << endl;
+	}
+
+	// suppresses compiler warnings about unused param entities.
+	int Cpp17::StandardAttributes(bool b [[maybe_unused]])
+	{
+		int num = 0;
+
+		switch (num) {
+		case 0:
+			// DO your stuff....
+			// indicates that a fallthrough in a switch statement is intentional.
+			[[fallthrough]];	// no need break
+
+		default:
+			return num;
+		}
+		return num;
+	}
+
+	void Cpp17::SpecialMathFunctions()
+	{
+		// EACH math function has 3 versions
+		// double		func
+		// float		func_f
+		// long double	func_l
+
+		auto binom = [](int n, int k) { return 1 / ((n + 1)*std::beta(n - k + 1, k + 1)); };
+
+		// associated Laguerre polynomials 
+		std::cout << std::assoc_laguerre(1, 10, 0.5) << endl;
+
+		// associated Legendre polynomials 
+		std::cout << std::assoc_legendre(1, 10, 0.5) << endl;
+
+		// beta function
+		std::cout << binom(1, 5) << endl;
+
+		// (complete)elliptic integral of the first kind
+		std::cout << std::comp_ellint_1(3.14159) << endl;
+
+		// (complete) elliptic integral of the second kind 
+		std::cout << std::comp_ellint_2(3.14159) << endl;
+
+		// (complete) elliptic integral of the third kind 
+		std::cout << std::comp_ellint_3(3.14159, 1.0) << endl;
+
+		// regular modified cylindrical Bessel functions 
+		std::cout << std::cyl_bessel_i(0, 1.2345) << endl;
+
+		// cylindrical Bessel functions (of the first kind) 
+		std::cout << std::cyl_bessel_j(0, 1.2345) << endl;
+
+		// irregular modified cylindrical Bessel functions
+		std::cout << std::cyl_bessel_k(0, 1.2345) << endl;
+
+		// cylindrical Neumann functions 
+		std::cout << std::cyl_neumann(0.5, 1.2345) << endl;
+
+		// cylindrical Neumann functions 
+		std::cout << std::ellint_1(0.5, 1.2345) << endl;
+
+		// (incomplete)elliptic integral of the second kind
+		std::cout << std::ellint_2(0.5, 1.2345) << endl;
+
+		// exponential integral
+		std::cout << std::expint(0) << endl;
+
+		// hermite polynomials 
+		std::cout << std::hermite(3, 10) << endl;
+
+		// Legendre polynomials 
+		std::cout << std::legendre(3, 10) << endl;
+
+		// Laguerre polynomials 
+		std::cout << std::laguerre(3, 10) << endl;
+
+		// Riemann zeta function 
+		std::cout << std::riemann_zeta(3) << endl;
+
+		// spherical Bessel functions (of the first kind) 
+		std::cout << std::sph_bessel(3, 6) << endl;
+
+		// spherical associated Legendre functions 
+		std::cout << std::sph_legendre(3, 6, 9.0) << endl;
+
+		// spherical Neumann functions 
+		std::cout << std::sph_neumann(3, 6.0) << endl;
 	}
 }

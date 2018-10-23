@@ -8,6 +8,9 @@
 #include <unordered_map>
 #include <initializer_list>
 
+// global macros
+#define IGNORE_EXCEPTION(METHOD) { try { METHOD(); } catch (...) {} }
+
 typedef double double_t;	// OLD: define double_t as an alias for type double
 using double_t = double;	// C++11: exactly SAME as above! use 1 or the other
 
@@ -64,6 +67,13 @@ namespace MODERNCPP
 	auto findMin(A a, B b) -> decltype(a < b ? a : b)
 	{
 		return (a < b) ? a : b;
+	}
+
+	// ignore exceptions
+	template< typename Callable, typename... Arguments > void
+		Ingnore_Exceptions(Callable && _method, Arguments && ... args) noexcept
+	{
+		try { _method(::std::forward< Arguments >(args)...); } catch (...) {}	//  Do nothing.
 	}
 
 	// explicit default and delete
@@ -143,9 +153,13 @@ namespace MODERNCPP
 		// https://thispointer.com/c-11-multithreading-part-1-three-different-ways-to-create-threads/
 		static void DoWork(void*);
 		void DoWorkInternal();
-		std::thread CallDoWorkInternal(int);
+		std::thread DoWorkAsync(int);
 		void ParallelThreads();
 		void ProducerConsumer();
+		void DetachedThread();
+
+		// Indicates that the function does not return.
+		[[noreturn]] void NoReturn() { throw "error"; }		// OK
 
 		// friend
 		friend std::ostream& operator<<(std::ostream&, const Cpp11&);
